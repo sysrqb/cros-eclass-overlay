@@ -1,0 +1,6 @@
+user:radvd
+uid:243
+gid:243
+gecos:router advertisement daemon
+home:/dev/null
+shell:/bin/false

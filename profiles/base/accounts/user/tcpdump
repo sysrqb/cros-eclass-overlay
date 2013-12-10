@@ -1,0 +1,6 @@
+user:tcpdump
+uid:215
+gid:215
+gecos:tcpdump --with-user
+home:/dev/null
+shell:/bin/false

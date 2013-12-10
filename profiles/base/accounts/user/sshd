@@ -1,0 +1,6 @@
+user:sshd
+uid:204
+gid:204
+gecos:ssh daemon
+home:/dev/null
+shell:/bin/false

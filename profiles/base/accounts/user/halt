@@ -1,0 +1,6 @@
+user:halt
+uid:7
+gid:0
+gecos:halt
+home:/sbin
+shell:/sbin/halt

@@ -1,0 +1,6 @@
+user:daemon
+uid:2
+gid:2
+gecos:daemon
+home:/sbin
+shell:/bin/false

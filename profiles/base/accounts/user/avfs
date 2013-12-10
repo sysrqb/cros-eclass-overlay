@@ -1,0 +1,6 @@
+user:avfs
+uid:301
+gid:301
+gecos:FUSE-based virtual FS daemon for archive files
+home:/dev/null
+shell:/bin/false

@@ -1,0 +1,6 @@
+user:portage
+uid:250
+gid:250
+gecos:portage
+home:/var/tmp/portage
+shell:/bin/false

@@ -1,0 +1,6 @@
+user:debugfs-access
+uid:236
+gid:236
+gecos:access to debugfs
+home:/dev/null
+shell:/bin/false

@@ -1,0 +1,6 @@
+user:syslog
+uid:202
+gid:202
+gecos:rsyslog
+home:/dev/null
+shell:/bin/false
