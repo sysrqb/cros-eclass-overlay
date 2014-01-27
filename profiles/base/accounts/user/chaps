@@ -1,6 +1,0 @@
-user:chaps
-uid:223
-gid:223
-gecos:chaps PKCS11 daemon
-home:/dev/null
-shell:/bin/false

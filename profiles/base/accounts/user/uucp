@@ -1,6 +1,0 @@
-user:uucp
-uid:10
-gid:14
-gecos:uucp
-home:/var/spool/uucp
-shell:/bin/false

@@ -1,6 +1,0 @@
-user:proxystate
-uid:227
-gid:227
-gecos:proxy monitoring
-home:/dev/null
-shell:/bin/false

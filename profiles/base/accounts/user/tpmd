@@ -1,6 +1,0 @@
-user:tpmd
-uid:225
-gid:225
-gecos:TPM daemon
-home:/dev/null
-shell:/bin/false

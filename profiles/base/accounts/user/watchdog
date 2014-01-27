@@ -1,6 +1,0 @@
-user:watchdog
-uid:229
-gid:229
-gecos:daisydog
-home:/dev/null
-shell:/bin/false

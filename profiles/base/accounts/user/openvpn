@@ -1,6 +1,0 @@
-user:openvpn
-uid:217
-gid:217
-gecos:openvpn
-home:/dev/null
-shell:/bin/false

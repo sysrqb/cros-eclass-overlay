@@ -1,6 +1,0 @@
-user:modem
-uid:241
-gid:241
-gecos:modem manager
-home:/dev/null
-shell:/bin/false

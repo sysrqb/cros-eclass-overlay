@@ -1,6 +1,0 @@
-user:brltty
-uid:240
-gid:240
-gecos:braille displays
-home:/dev/null
-shell:/bin/false

@@ -1,6 +1,0 @@
-user:power
-uid:228
-gid:228
-gecos:power management daemon
-home:/dev/null
-shell:/bin/false

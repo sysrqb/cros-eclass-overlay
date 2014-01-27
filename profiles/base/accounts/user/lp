@@ -1,6 +1,0 @@
-user:lp
-uid:4
-gid:7
-gecos:lp
-home:/var/spool/lpd
-shell:/bin/false

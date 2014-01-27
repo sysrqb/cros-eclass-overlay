@@ -1,3 +1,0 @@
-group:chronos-access
-gid:1001
-users:root,ipsec,chronos,ntfs-3g,avfs,fuse-exfat,chaps

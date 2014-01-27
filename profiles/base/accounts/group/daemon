@@ -1,3 +1,0 @@
-group:daemon
-gid:2
-users:root,bin,daemon

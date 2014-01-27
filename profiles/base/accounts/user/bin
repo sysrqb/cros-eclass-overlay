@@ -1,6 +1,0 @@
-user:bin
-uid:1
-gid:1
-gecos:bin
-home:/bin
-shell:/bin/false

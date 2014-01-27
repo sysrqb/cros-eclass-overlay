@@ -1,6 +1,0 @@
-user:adm
-uid:3
-gid:4
-gecos:adm
-home:/var/adm
-shell:/bin/false

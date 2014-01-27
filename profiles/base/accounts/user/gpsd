@@ -1,6 +1,0 @@
-user:gpsd
-uid:242
-gid:242
-gecos:GPS daemon
-home:/dev/null
-shell:/bin/false

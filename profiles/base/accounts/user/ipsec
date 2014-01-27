@@ -1,6 +1,0 @@
-user:ipsec
-uid:212
-gid:212
-gecos:strongswan, other ipsec VPNs
-home:/dev/null
-shell:/bin/false

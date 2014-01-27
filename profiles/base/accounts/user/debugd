@@ -1,6 +1,0 @@
-user:debugd
-uid:216
-gid:216
-gecos:debug daemon
-home:/dev/null
-shell:/bin/false

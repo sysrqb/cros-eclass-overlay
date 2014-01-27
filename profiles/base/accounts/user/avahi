@@ -1,6 +1,0 @@
-user:avahi
-uid:238
-gid:238
-gecos:avahi-daemon
-home:/dev/null
-shell:/bin/false

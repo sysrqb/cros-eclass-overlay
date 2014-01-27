@@ -1,6 +1,0 @@
-user:ntp
-uid:203
-gid:203
-gecos:ntp, perhaps unused
-home:/dev/null
-shell:/bin/false
