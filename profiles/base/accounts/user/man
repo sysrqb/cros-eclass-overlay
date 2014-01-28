@@ -1,0 +1,6 @@
+user:man
+uid:13
+gid:15
+gecos:added by portage for man
+home:/usr/share/man
+shell:/bin/false

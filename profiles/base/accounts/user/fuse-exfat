@@ -1,0 +1,6 @@
+user:fuse-exfat
+uid:302
+gid:302
+gecos:FUSE-based exfat FS daemon
+home:/dev/null
+shell:/bin/false

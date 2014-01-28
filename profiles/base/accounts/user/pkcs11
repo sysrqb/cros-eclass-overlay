@@ -1,0 +1,6 @@
+user:pkcs11
+uid:208
+gid:208
+gecos:PKCS11 clients
+home:/dev/null
+shell:/bin/false

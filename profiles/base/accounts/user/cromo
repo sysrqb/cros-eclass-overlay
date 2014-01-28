@@ -1,0 +1,6 @@
+user:cromo
+uid:210
+gid:210
+gecos:CrOS modem manager
+home:/dev/null
+shell:/bin/false

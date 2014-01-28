@@ -1,0 +1,6 @@
+user:wpa
+uid:219
+gid:219
+gecos:wpa_supplicant
+home:/dev/null
+shell:/bin/false

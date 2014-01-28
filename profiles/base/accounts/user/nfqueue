@@ -1,0 +1,6 @@
+user:nfqueue
+uid:232
+gid:232
+gecos:netfilter-queue
+home:/dev/null
+shell:/bin/false

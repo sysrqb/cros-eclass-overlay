@@ -1,0 +1,6 @@
+user:bluetooth
+uid:218
+gid:218
+gecos:bluez
+home:/dev/null
+shell:/bin/false

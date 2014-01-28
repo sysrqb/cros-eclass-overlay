@@ -1,0 +1,6 @@
+user:dhcp
+uid:224
+gid:224
+gecos:dhcpcd DHCP client
+home:/dev/null
+shell:/bin/false

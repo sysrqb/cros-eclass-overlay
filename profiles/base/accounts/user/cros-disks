@@ -1,0 +1,6 @@
+user:cros-disks
+uid:213
+gid:213
+gecos:CrOS disk managing daemon
+home:/dev/null
+shell:/bin/false

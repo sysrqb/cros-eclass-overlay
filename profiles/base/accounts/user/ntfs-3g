@@ -1,0 +1,6 @@
+user:ntfs-3g
+uid:300
+gid:300
+gecos:NTFS FUSE-based filesystem daemon
+home:/dev/null
+shell:/bin/false

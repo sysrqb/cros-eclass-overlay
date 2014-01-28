@@ -1,0 +1,6 @@
+user:debugd-logs
+uid:235
+gid:235
+gecos:access to unprivileged debugd logs
+home:/dev/null
+shell:/bin/false

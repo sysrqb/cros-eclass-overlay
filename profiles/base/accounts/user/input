@@ -1,0 +1,6 @@
+user:input
+uid:222
+gid:222
+gecos:dev/input/event access
+home:/dev/null
+shell:/bin/false

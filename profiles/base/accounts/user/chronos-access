@@ -1,0 +1,6 @@
+user:chronos-access
+uid:1001
+gid:1001
+gecos:non-chronos user with access to chronos data
+home:/dev/null
+shell:/bin/false

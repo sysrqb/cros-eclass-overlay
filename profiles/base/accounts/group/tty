@@ -1,0 +1,3 @@
+group:tty
+gid:5
+users:xorg,power,brltty

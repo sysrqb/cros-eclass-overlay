@@ -1,0 +1,6 @@
+user:news
+uid:9
+gid:13
+gecos:news
+home:/var/spool/news
+shell:/bin/false

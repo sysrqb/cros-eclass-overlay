@@ -1,0 +1,6 @@
+user:nobody
+uid:65534
+gid:65534
+gecos:nobody
+home:/var/empty
+shell:/bin/false
