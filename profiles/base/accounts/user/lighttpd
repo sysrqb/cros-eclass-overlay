@@ -1,0 +1,6 @@
+user:lighttpd
+uid:410
+gid:410
+gecos:lighttpd webserver
+home:/dev/null
+shell:/bin/false

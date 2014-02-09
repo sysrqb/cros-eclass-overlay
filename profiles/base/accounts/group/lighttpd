@@ -1,0 +1,4 @@
+group:lighttpd
+password:!
+gid:410
+users:
