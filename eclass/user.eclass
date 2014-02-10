@@ -158,8 +158,8 @@ egetent() {
 	*) die "sorry, database '${db}' not yet supported; file a bug" ;;
 	esac
 
-	local dbfile=$(readlink -e "${ROOT}/etc/${db}")
-	[[ ! -e "${dbfile}" ]] && die "${db} under ${ROOT} does not exist."
+	local dbfile=$(readlink -e "${root}/etc/${db}")
+	[[ ! -e "${dbfile}" ]] && die "${db} under ${root} does not exist."
 	[[ ! -w "${dbfile}" ]] && use_lock=false  # File can't change anyway!
 
 	local lockfile="${dbfile}.lock"
