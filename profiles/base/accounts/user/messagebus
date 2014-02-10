@@ -1,6 +1,6 @@
 user:messagebus
 uid:201
 gid:201
-gecos:wtf haxx
+gecos:dbus-daemon
 home:/dev/null
 shell:/bin/false
