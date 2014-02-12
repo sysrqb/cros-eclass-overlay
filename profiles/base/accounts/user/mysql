@@ -1,0 +1,6 @@
+user:mysql
+uid:245
+gid:245
+gecos:mysql database
+home:/dev/null
+shell:/bin/false

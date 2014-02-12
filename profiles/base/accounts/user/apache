@@ -1,0 +1,6 @@
+user:apache
+uid:244
+gid:244
+gecos:apache server
+home:/dev/null
+shell:/bin/false

@@ -209,6 +209,13 @@ enewuser() {
 	# Handle uid. Passing no UID is functionally equivalent to passing -1.
 	local provided_uid=$(_get_value_for_user "${euser}" uid)
 	local euid=$1; shift
+	if [[ "${PORTAGE_REPO_NAME}" == "portage-stable" ]] ; then
+		# If caller is from portage-stable, ignore specified UID.
+		if [[ ${euid:--1} != "-1" ]] ; then
+			einfo "Ignoring requested UID ${euid} in portage-stable ebuilds."
+		fi
+		euid=''
+	fi
 	if [[ -z ${euid} ]] ; then
 		euid=-1
 	elif [[ ${euid} -lt -1 ]] ; then
@@ -337,6 +344,13 @@ enewgroup() {
 	# handle gid
 	local provided_gid=$(_get_value_for_group "${egroup}" gid)
 	local egid=$1; shift
+	if [[ "${PORTAGE_REPO_NAME}" == "portage-stable" ]] ; then
+		# If caller is from portage-stable, ignore specified GID.
+		if [[ ${egid:--1} != "-1" ]] ; then
+			einfo "Ignoring requested GID ${egid} in portage-stable ebuilds."
+		fi
+		egid=''
+	fi
 	if [[ -z ${egid} ]] ; then
 		# If caller specified nothing and profile has GID, use profile.
 		# If caller specified nothing and profile has no GID, barf.
