@@ -1,3 +1,4 @@
 group:brltty
 gid:240
+# The browser needs to be able to speak to the braille subsystem.
 users:chronos

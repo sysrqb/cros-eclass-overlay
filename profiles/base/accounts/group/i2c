@@ -1,3 +1,5 @@
 group:i2c
 gid:404
+# Give the power manager access to I2C devices so it can adjust external
+# displays' brightness via DDC.
 users:power

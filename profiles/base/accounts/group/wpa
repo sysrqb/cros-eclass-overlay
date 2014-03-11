@@ -1,3 +1,4 @@
 group:wpa
 gid:219
+# Needed because we run wpa_cli as root.
 users:root

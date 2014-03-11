@@ -1,3 +1,4 @@
 group:cras
 gid:220
+# The browser runs as chronos, and the power manager needs to check if audio is playing.
 users:chronos,power

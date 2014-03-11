@@ -1,3 +1,4 @@
 group:usb
 gid:85
+# mtp for access to media on phones/tablets; brltty for braille.
 users:mtp,brltty

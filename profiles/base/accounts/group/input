@@ -1,3 +1,6 @@
 group:input
 gid:222
+# cras needs access to /dev/input/event*
+# power manager needs to read from /dev/input/event* to observe power
+# button and lid events.
 users:cras,xorg,power
