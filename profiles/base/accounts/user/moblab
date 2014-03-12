@@ -1,0 +1,7 @@
+user:moblab
+uid:246
+gid:246
+password:*
+gecos:moblab user
+home:/home/moblab
+shell:/bin/bash
