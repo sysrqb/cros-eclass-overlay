@@ -248,6 +248,11 @@ enewuser() {
 	fi
 	einfo " - Userid: ${euid}"
 
+	# See if there's a provided gid and use it if so.
+	local provided_gid=$(_get_value_for_user "${euser}" gid)
+	local egid=${provided_gid:-${euid}}
+	einfo " - Groupid: ${egid}"
+
 	# handle shell
 	local eshell=$1; shift
 	if [[ -n ${eshell} && ${eshell} != "-1" ]] ; then
@@ -296,7 +301,7 @@ enewuser() {
 
 	local epassword=$(_get_value_for_user "${euser}" password)
 	: ${epassword:="!"}
-	local entry="${euser}:${epassword}:${euid}:${euid}:${comment}:${ehome}:${eshell}"
+	local entry="${euser}:${epassword}:${euid}:${egid}:${comment}:${ehome}:${eshell}"
 	if [[ ${EBUILD_PHASE} == "setup" ]] ; then
 		_write_entry_to_db "${entry}" passwd / || die "Must be able to add users during setup."
 	fi
