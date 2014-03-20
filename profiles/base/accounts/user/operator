@@ -1,6 +1,0 @@
-user:operator
-uid:11
-gid:0
-gecos:operator
-home:/root
-shell:/bin/bash

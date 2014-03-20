@@ -1,6 +1,0 @@
-user:shutdown
-uid:6
-gid:0
-gecos:shutdown
-home:/sbin
-shell:/sbin/shutdown
