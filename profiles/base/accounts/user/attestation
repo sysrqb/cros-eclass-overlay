@@ -1,0 +1,6 @@
+user:attestation
+uid:247
+gid:247
+gecos:Chromium OS attestation daemon runs as this user
+home:/dev/null
+shell:/bin/false
