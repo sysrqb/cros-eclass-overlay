@@ -38,11 +38,52 @@ _assert_pkg_ebuild_phase() {
 	esac
 }
 
-# If an overlay has eclass overrides, but doesn't actually override the
-# user.eclass, we'll have USER_ECLASSDIR pointing to the active overlay's
-# eclass/ dir, but the users and groups templates are still in our profiles/.
-USER_ECLASSDIR_LOCAL=${BASH_SOURCE[0]%/*}
-ACCOUNTS_DIR_LOCAL="${USER_ECLASSDIR_LOCAL}/../profiles/base/accounts/"
+# Array of paths to existing accounts DBs in overlays that apply for the
+# current board. In order of decreasing overlay priority.
+ACCOUNTS_DIRS=()
+
+# @FUNCTION: _find_accounts_dirs
+# @INTERNAL
+# @USAGE:
+# @DESCRIPTION:
+# Looks for accounts DB under all valid overlays for the current board and
+# populates ACCOUNTS_DIRS with fully-qualified paths to all the ones it finds.
+# Values are cached, so multiple calls will return quickly without updating
+# global ACCOUNTS_DIRS array.
+_find_accounts_dirs() {
+	[[ ${#ACCOUNTS_DIRS[@]} -gt 0 ]] && return
+	local overlay
+	for overlay in $(_call_portageq get_repos "${SYSROOT:-/}") ; do
+		local overlay_dir=$(_call_portageq get_repo_path "${SYSROOT:-/}" "${overlay}")
+		local accounts_dir="${overlay_dir}/profiles/base/accounts"
+		if [[ -d "${accounts_dir}" ]] ; then
+			einfo "Adding ${accounts_dir} to user/group search path."
+			ACCOUNTS_DIRS+=("${accounts_dir}")
+		fi
+	done
+}
+
+# @FUNCTION: _call_portageq
+# @INTERNAL
+# @USAGE: <portageq command> [<arg> ...]
+_call_portageq() {
+	echo $(env -i PATH="${PATH}" PORTAGE_USERNAME="${PORTAGE_USERNAME}" PORTAGE_CONFIGROOT="${PORTAGE_CONFIGROOT}" portageq "$@")
+}
+
+# @FUNCTION: _find_acct_template
+# @INTERNAL
+# @USAGE: <db> <key>
+# @DESCRIPTION:
+# Searches existing account dbs in overlay-inheritance order for <key> in <db>.
+_find_acct_template() {
+	local db=$1 key=$2
+	[[ $# -ne 2 ]] && die "usage: ${FUNCNAME} <db> <key>"
+	local accounts_dir
+	for accounts_dir in "${ACCOUNTS_DIRS[@]}" ; do
+		local template="${accounts_dir}/${db}/${key}"
+		[[ -e "${template}" ]] && echo "${template}" && break
+	done
+}
 
 # @FUNCTION: _get_value_for_user
 # @INTERNAL
@@ -51,15 +92,16 @@ ACCOUNTS_DIR_LOCAL="${USER_ECLASSDIR_LOCAL}/../profiles/base/accounts/"
 # Gets value from appropriate account definition file.
 _get_value_for_user() {
 	local user=$1 key=$2
-	[[ $# -ne 2 ]] && die "usage: _get_value_for_user <user> <key>"
+	[[ $# -ne 2 ]] && die "usage: ${FUNCNAME} <user> <key>"
+	[[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] && die "Must populate ACCOUNTS_DIRS!"
 
 	case ${key} in
 	user|password|uid|gid|gecos|home|shell) ;;
 	*) die "sorry, '${key}' is not a field in the passwd db." ;;
 	esac
 
-	local template="${ACCOUNTS_DIR_LOCAL}/user/${user}"
-	[[ ! -e "${template}" ]] && die "No entry for ${user} at ${template}."
+	local template=$(_find_acct_template user "${user}")
+	[[ -z "${template}" ]] && die "No entry for ${user} in any overlay."
 	awk -F':' -v key="${key}" '$1 == key { print $2 }' "${template}"
 }
 
@@ -70,15 +112,16 @@ _get_value_for_user() {
 # Gets value from appropriate account definition file.
 _get_value_for_group() {
 	local group=$1 key=$2
-	[[ $# -ne 2 ]] && die "usage: _get_value_for_group <group> <key>"
+	[[ $# -ne 2 ]] && die "usage: ${FUNCNAME} <group> <key>"
+	[[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]]  && die "Must populate ACCOUNTS_DIRS!"
 
 	case ${key} in
 	group|password|gid|users) ;;
 	*) die "sorry, '${key}' is not a field in the group db." ;;
 	esac
 
-	local template="${ACCOUNTS_DIR_LOCAL}/group/${group}"
-	[[ ! -e "${template}" ]] && die "No entry for ${group} at ${template}."
+	local template=$(_find_acct_template group "${group}")
+	[[ -z "${template}" ]] && die "No entry for ${group} in any overlay."
 	awk -F':' -v key="${key}" '$1 == key { print $2 }' "${template}"
 }
 
@@ -183,7 +226,8 @@ egetent() {
 # /bin/false, default homedir is /dev/null, and there are no default groups.
 enewuser() {
 	_assert_pkg_ebuild_phase ${FUNCNAME}
-	if [[ ! -e "${ACCOUNTS_DIR_LOCAL}" ]] ; then
+	_find_accounts_dirs
+	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
 		ewarn "No user/group data files present. Skipping."
 		return 0
 	fi
@@ -324,7 +368,8 @@ enewuser() {
 # allocate the next available one.
 enewgroup() {
 	_assert_pkg_ebuild_phase ${FUNCNAME}
-	if [[ ! -e "${ACCOUNTS_DIR_LOCAL}" ]] ; then
+	_find_accounts_dirs
+	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
 		ewarn "No user/group data files present. Skipping."
 		return 0
 	fi
