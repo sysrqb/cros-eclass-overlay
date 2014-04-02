@@ -1,0 +1,6 @@
+user:saned
+uid:255
+gid:255
+gecos:document scanning process
+home:/dev/null
+shell:/bin/false
