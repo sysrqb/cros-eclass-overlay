@@ -56,3 +56,26 @@ The 'chronos' user, which all user-facing processes in CrOS run as, is
 UID/GID 1000.  There is also a special user/group that has access to
 many resources owned by chronos, called 'chronos-access', which has
 the UID/GID 1001.
+
+---------
+Creating users and groups in ebuilds.
+
+The API implemented by the CrOS-specific user.eclass is compatible with that
+provided by the upstream user.eclass.
+
+enewuser cras   # Creates a user called 'cras' with the pre-specified UID.
+enewgroup cras  # Ditto for the group.
+
+
+You can choose to specify other fields when calling the functions to create
+new users and groups, but the eclass will bail if the values you choose conflict
+with those in the DB.
+
+Calls to enewuser and enewgroup are allowed ONLY in three ebuild stanzas:
+
+pkg_setup()    - Make the calls here if you need to chown/chgrp files using the
+                 accounts you're creating.
+pkg_preinst()  - Make the calls here if you just need the accounts to exist
+                 at runtime.
+pkg_postinst() - Try to avoid making the calls here. If you need a failed
+                 account creation to be non-fatal, then you can add them here.
