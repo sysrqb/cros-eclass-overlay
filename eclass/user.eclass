@@ -52,6 +52,19 @@ ACCOUNTS_DIRS=()
 # global ACCOUNTS_DIRS array.
 _find_accounts_dirs() {
 	[[ ${#ACCOUNTS_DIRS[@]} -gt 0 ]] && return
+
+	# Load the cache from disk.  We don't want to use the env because that
+	# will be saved at build time and used when merging binpkgs.  Instead,
+	# we need it to be generated at binpkg time too.
+	local cache="${T}/_accounts_dir_cache.list"
+	if [[ -e ${cache} ]]; then
+		local dir
+		while read -d $'\0' -r dir; do
+			ACCOUNTS_DIRS+=("${dir}")
+		done <"${cache}"
+		return
+	fi
+
 	local overlay
 	for overlay in $(_call_portageq get_repos "${SYSROOT:-/}") ; do
 		local overlay_dir=$(_call_portageq get_repo_path "${SYSROOT:-/}" "${overlay}")
@@ -61,6 +74,8 @@ _find_accounts_dirs() {
 			ACCOUNTS_DIRS+=("${accounts_dir}")
 		fi
 	done
+
+	printf '%s\0' "${ACCOUNTS_DIRS[@]}" >"${cache}"
 }
 
 # @FUNCTION: _call_portageq
@@ -226,6 +241,8 @@ egetent() {
 # /bin/false, default homedir is /dev/null, and there are no default groups.
 enewuser() {
 	_assert_pkg_ebuild_phase ${FUNCNAME}
+
+	local ACCOUNTS_DIRS
 	_find_accounts_dirs
 	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
 		ewarn "No user/group data files present. Skipping."
@@ -368,6 +385,8 @@ enewuser() {
 # allocate the next available one.
 enewgroup() {
 	_assert_pkg_ebuild_phase ${FUNCNAME}
+
+	local ACCOUNTS_DIRS
 	_find_accounts_dirs
 	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
 		ewarn "No user/group data files present. Skipping."
