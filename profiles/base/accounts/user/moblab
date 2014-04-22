@@ -1,7 +1,10 @@
 user:moblab
 uid:246
 gid:246
-password:*
+# TODO(sbasi): For now we let people log in via ssh to run commands.
+# In the future, we'll want to disable this as everything will be done
+# via the web interface.
+password:x
 gecos:moblab user
 home:/home/moblab
 shell:/bin/bash
