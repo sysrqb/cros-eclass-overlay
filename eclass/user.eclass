@@ -190,8 +190,11 @@ _write_entry_to_db() {
 	# Need to check if the acct exists while we hold the lock, in case
 	# another ebuild added it in the meantime.
 	local key=$(awk -F':' '{ print $1 }' <<<"${entry}")
-	if [[ -z $(egetent --nolock "${db}" "${key}" "${root}") ]] ; then
+	local existing_entry=$(egetent --nolock "${db}" "${key}" "${root}")
+	if [[ -z ${existing_entry} ]] ; then
 		echo "${entry}" >> "${dbfile}" || die "Could not write ${entry} to ${dbfile}."
+	else
+		einfo "'${entry}' superceded by '${existing_entry}'"
 	fi
 
 	rm "${lockfile}" || die "Failed to release lock on ${lockfile}."
@@ -242,13 +245,6 @@ egetent() {
 enewuser() {
 	_assert_pkg_ebuild_phase ${FUNCNAME}
 
-	local ACCOUNTS_DIRS
-	_find_accounts_dirs
-	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
-		ewarn "No user/group data files present. Skipping."
-		return 0
-	fi
-
 	# get the username
 	local euser=$1; shift
 	if [[ -z ${euser} ]] ; then
@@ -258,6 +254,14 @@ enewuser() {
 
 	# lets see if the username already exists in ${ROOT}
 	if [[ -n $(egetent passwd "${euser}") ]] ; then
+		return 0
+	fi
+
+	# Locate all applicable accounts profiles.
+	local ACCOUNTS_DIRS
+	_find_accounts_dirs
+	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
+		ewarn "No user/group data files present. Skipping."
 		return 0
 	fi
 
@@ -303,10 +307,6 @@ enewuser() {
 		# If profile has no entry w/UID and caller specified one, OK.
 	fi
 
-	if [[ -n $(egetent passwd ${euid}) ]] ; then
-		eerror "UID ${euid} already taken!"
-		die "${euid} already taken in $(egetent passwd ${euid})"
-	fi
 	einfo " - Userid: ${euid}"
 
 	# See if there's a provided gid and use it if so.
@@ -386,13 +386,6 @@ enewuser() {
 enewgroup() {
 	_assert_pkg_ebuild_phase ${FUNCNAME}
 
-	local ACCOUNTS_DIRS
-	_find_accounts_dirs
-	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
-		ewarn "No user/group data files present. Skipping."
-		return 0
-	fi
-
 	# Get the group.
 	local egroup=$1; shift
 	if [[ -z ${egroup} ]] ; then
@@ -402,6 +395,14 @@ enewgroup() {
 
 	# See if group already exists.
 	if [[ -n $(egetent group "${egroup}") ]] ; then
+		return 0
+	fi
+
+	# Locate all applicable accounts profiles.
+	local ACCOUNTS_DIRS
+	_find_accounts_dirs
+	if [[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] ; then
+		ewarn "No user/group data files present. Skipping."
 		return 0
 	fi
 	# Ensure group exists in profile.
@@ -445,10 +446,6 @@ enewgroup() {
 			eerror "${egid} conflicts with provided ${provided_gid}!"
 			die "${egid} conflicts with provided ${provided_gid}!"
 		fi
-	fi
-	if [[ -n $(egetent group ${egid}) ]] ; then
-		eerror "Groupid ${egid} already taken!"
-		die "${egid} already taken in $(egetent group ${egid})"
 	fi
 	einfo " - Groupid: ${egid}"
 
