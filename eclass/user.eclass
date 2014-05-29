@@ -111,7 +111,7 @@ _get_value_for_user() {
 	[[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]] && die "Must populate ACCOUNTS_DIRS!"
 
 	case ${key} in
-	user|password|uid|gid|gecos|home|shell) ;;
+	user|password|uid|gid|gecos|home|shell|defunct) ;;
 	*) die "sorry, '${key}' is not a field in the passwd db." ;;
 	esac
 
@@ -131,7 +131,7 @@ _get_value_for_group() {
 	[[ ${#ACCOUNTS_DIRS[@]} -eq 0 ]]  && die "Must populate ACCOUNTS_DIRS!"
 
 	case ${key} in
-	group|password|gid|users) ;;
+	group|password|gid|users|defunct) ;;
 	*) die "sorry, '${key}' is not a field in the group db." ;;
 	esac
 
@@ -268,6 +268,8 @@ enewuser() {
 	# Ensure username exists in profile.
 	if [[ -z $(_get_value_for_user "${euser}" user) ]] ; then
 		die "'${euser}' does not exist in profile!"
+	elif [[ -n $(_get_value_for_user "${euser}" defunct) ]] ; then
+		die "'${euser}' was used previously and is now disallowed."
 	fi
 	einfo "Adding user '${euser}' to your system ..."
 
@@ -408,6 +410,8 @@ enewgroup() {
 	# Ensure group exists in profile.
 	if [[ -z $(_get_value_for_group "${egroup}" group) ]] ; then
 		die "Config for ${egroup} not present in profile!"
+	elif [[ -n $(_get_value_for_group "${egroup}" defunct) ]] ; then
+		die "'${egroup}' was used previously and is now disallowed."
 	fi
 	einfo "Adding group '${egroup}' to your system ..."
 

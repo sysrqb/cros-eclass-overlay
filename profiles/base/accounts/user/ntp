@@ -1,6 +1,7 @@
 user:ntp
 uid:203
 gid:203
-gecos:ntp, perhaps unused
+gecos:network time protocol daemon
 home:/dev/null
 shell:/bin/false
+defunct:true

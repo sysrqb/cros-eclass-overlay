@@ -4,3 +4,4 @@ gid:206
 gecos:policykit, perhaps unused
 home:/dev/null
 shell:/bin/false
+defunct:true

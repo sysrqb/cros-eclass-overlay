@@ -4,3 +4,4 @@ gid:214
 gecos:tor, perhaps unused
 home:/dev/null
 shell:/bin/false
+defunct:true

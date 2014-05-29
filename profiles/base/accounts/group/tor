@@ -1,3 +1,4 @@
 group:tor
 gid:214
 users:
+defunct:true

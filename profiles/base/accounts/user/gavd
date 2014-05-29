@@ -1,0 +1,7 @@
+user:gavd
+uid:221
+gid:221
+gecos:Deprecated audio daemon user
+home:/dev/null
+shell:/bin/false
+defunct:true

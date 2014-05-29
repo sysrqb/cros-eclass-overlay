@@ -15,9 +15,10 @@ import sys
 
 
 # Objects to hold group/user accounts.
-Group = collections.namedtuple('Group', ['group', 'password', 'gid', 'users'])
+Group = collections.namedtuple('Group', ['group', 'password', 'gid', 'users',
+                                         'defunct'])
 User = collections.namedtuple('User', ['user', 'password', 'uid', 'gid',
-                                       'gecos', 'home', 'shell'])
+                                       'gecos', 'home', 'shell', 'defunct'])
 
 
 def _ParseAccount(content, obj, defaults):
@@ -45,6 +46,7 @@ def ParseGroup(content):
   defaults = {
       'password': '!',
       'users': '',
+      'defunct': '',
   }
   return _ParseAccount(content, Group, defaults)
 
@@ -56,6 +58,7 @@ def ParseUser(content):
       'home': '/dev/null',
       'password': '!',
       'shell': '/bin/false',
+      'defunct': '',
   }
   return _ParseAccount(content, User, defaults)
 
@@ -127,6 +130,7 @@ def main(args):
         ('group', ''),
         ('password', 'pass'),
         ('users', ''),
+        ('defunct', ''),
     )
     DisplayAccounts(groups, order)
 
@@ -141,6 +145,7 @@ def main(args):
         ('home', ''),
         ('password', 'pass'),
         ('gecos', ''),
+        ('defunct', ''),
     )
     DisplayAccounts(users, order)
 
