@@ -1,0 +1,7 @@
+user:goofy
+uid:248
+gid:248
+password:x
+gecos:role account for running factory flow tests
+home:/home/goofy
+shell:/bin/bash
