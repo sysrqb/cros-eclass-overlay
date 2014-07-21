@@ -1,0 +1,6 @@
+user:easy-unlock
+uid:249
+gid:249
+gecos:Daemon for managing crypto operations for Easy Unlock
+home:/dev/null
+shell:/bin/false
