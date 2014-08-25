@@ -1,0 +1,6 @@
+user:snort
+uid:256
+gid:256
+gecos:snort daemon
+home:/dev/null
+shell:/bin/false
