@@ -1,4 +1,4 @@
 group:tss
 gid:207
-# Only root, chaps, and attestation are allowed to talk to the TPM via tcsd.
-users:root,chaps,attestation
+# Only certain users are allowed to talk to the TPM via tcsd.
+users:root,chaps,attestation,trunks

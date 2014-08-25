@@ -1,0 +1,6 @@
+user:trunks
+uid:251
+gid:251
+gecos:Chromium OS trunks daemon runs as this user
+home:/dev/null
+shell:/bin/false
