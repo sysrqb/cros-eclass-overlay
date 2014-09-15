@@ -1,0 +1,6 @@
+user:volume
+uid:257
+gid:257
+gecos:Chromium OS volume daemon
+home:/dev/null
+shell:/bin/false
