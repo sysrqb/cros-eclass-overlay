@@ -1,4 +1,0 @@
-# Group for Chromium OS volume daemon
-group:volume
-gid:257
-users:
