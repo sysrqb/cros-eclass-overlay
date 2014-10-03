@@ -1,0 +1,7 @@
+user:mobbuild
+uid:261
+gid:261
+password:x
+gecos:mobbuild user
+home:/home/mobbuild
+shell:/bin/bash
