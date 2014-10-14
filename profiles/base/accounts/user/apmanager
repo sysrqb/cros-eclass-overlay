@@ -1,0 +1,6 @@
+user:apmanager
+uid:259
+gid:259
+gecos:access point manager daemon
+home:/dev/null
+shell:/bin/false
