@@ -1,0 +1,6 @@
+user:peerd
+uid:260
+gid:260
+gecos:peer discovery services daemon
+home:/dev/null
+shell:/bin/false
