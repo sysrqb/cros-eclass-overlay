@@ -1,0 +1,6 @@
+user:mojo
+uid:263
+gid:263
+gecos:mojo_shell, the mojo service registrar and matchmaker
+home:/dev/null
+shell:/bin/false
