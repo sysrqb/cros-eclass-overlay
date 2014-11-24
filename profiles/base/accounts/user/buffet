@@ -1,6 +1,6 @@
 user:buffet
-uid:307
-gid:307
+uid:264
+gid:264
 gecos:buffet daemon
 home:/dev/null
 shell:/bin/false
