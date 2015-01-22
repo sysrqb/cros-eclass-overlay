@@ -1,0 +1,6 @@
+user:webservd
+uid:266
+gid:266
+gecos:web server daemon
+home:/dev/null
+shell:/bin/false
