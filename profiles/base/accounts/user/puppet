@@ -1,0 +1,5 @@
+user:puppet
+uid:267
+gid:267
+home:/dev/null
+shell:/bin/false
