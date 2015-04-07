@@ -8,6 +8,7 @@
 
 from __future__ import print_function
 
+import argparse
 import collections
 import glob
 import os
@@ -15,13 +16,13 @@ import sys
 
 
 # Objects to hold group/user accounts.
-Group = collections.namedtuple('Group', ['group', 'password', 'gid', 'users',
-                                         'defunct'])
-User = collections.namedtuple('User', ['user', 'password', 'uid', 'gid',
-                                       'gecos', 'home', 'shell', 'defunct'])
+Group = collections.namedtuple('Group', ('group', 'password', 'gid', 'users',
+                                         'defunct'))
+User = collections.namedtuple('User', ('user', 'password', 'uid', 'gid',
+                                       'gecos', 'home', 'shell', 'defunct'))
 
 
-def _ParseAccount(content, obj, defaults):
+def _ParseAccount(name, name_key, content, obj, defaults):
   """Parse the raw data in |content| and return a new |obj|"""
   d = defaults.copy()
 
@@ -38,20 +39,24 @@ def _ParseAccount(content, obj, defaults):
   if missing_keys:
     raise ValueError('missing keys: %s' % ' '.join(missing_keys))
 
+  if d[name_key] != name:
+    raise ValueError('account "%s" has the %s field set to "%s"' %
+                     (name, name_key, d[name_key]))
+
   return obj(**d)
 
 
-def ParseGroup(content):
+def ParseGroup(name, content):
   """Parse |content| as a Group object"""
   defaults = {
       'password': '!',
       'users': '',
       'defunct': '',
   }
-  return _ParseAccount(content, Group, defaults)
+  return _ParseAccount(name, 'group', content, Group, defaults)
 
 
-def ParseUser(content):
+def ParseUser(name, content):
   """Parse |content| as a User object"""
   defaults = {
       'gecos': '',
@@ -60,7 +65,7 @@ def ParseUser(content):
       'shell': '/bin/false',
       'defunct': '',
   }
-  return _ParseAccount(content, User, defaults)
+  return _ParseAccount(name, 'user', content, User, defaults)
 
 
 def AlignWidths(arr):
@@ -105,21 +110,34 @@ def DisplayAccounts(accts, order):
     p(a)
 
 
-def main(args):
-  if not args:
+def GetParser():
+  """Creates the argparse parser."""
+  parser = argparse.ArgumentParser(description=__doc__)
+  parser.add_argument('account', nargs='*',
+                      help='Display these account files only')
+  return parser
+
+
+def main(argv):
+  parser = GetParser()
+  opts = parser.parse_args(argv)
+
+  accounts = opts.account
+  if not accounts:
     accounts_dir = os.path.dirname(os.path.realpath(__file__))
-    args = (glob.glob(os.path.join(accounts_dir, 'group', '*')) +
-            glob.glob(os.path.join(accounts_dir, 'user', '*')))
+    accounts = (glob.glob(os.path.join(accounts_dir, 'group', '*')) +
+                glob.glob(os.path.join(accounts_dir, 'user', '*')))
 
   groups = []
   users = []
-  for f in args:
+  for f in accounts:
     try:
       content = open(f).read()
+      name = os.path.basename(f)
       if 'group:' in content:
-        groups.append(ParseGroup(content))
+        groups.append(ParseGroup(name, content))
       else:
-        users.append(ParseUser(content))
+        users.append(ParseUser(name, content))
     except ValueError as e:
       print('error: %s: %s' % (f, e))
       return os.EX_DATAERR
