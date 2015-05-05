@@ -1,0 +1,6 @@
+user:dnsmasq
+uid:268
+gid:268
+gecos:dnsmasq
+home:/dev/null
+shell:/bin/false
