@@ -1,0 +1,6 @@
+user:tpm_manager
+uid:252
+gid:252
+gecos:Chromium OS tpm_manager daemon runs as this user
+home:/dev/null
+shell:/bin/false
