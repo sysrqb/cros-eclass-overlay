@@ -110,6 +110,30 @@ def DisplayAccounts(accts, order):
     p(a)
 
 
+def CheckConsistency(groups, users):
+  """Run various consistency/sanity checks on the lists of groups/users.
+
+  This does not check for syntax/etc... errors on a per-account basis as the
+  main _ParseAccount function above took care of that.
+  """
+  found_users = set(x.user for x in users)
+  want_users = set()
+  for group in groups:
+    if group.users:
+      want_users.update(group.users.split(','))
+
+  missing_users = want_users - found_users
+  if missing_users:
+    print('error: group lists unknown users', file=sys.stderr)
+    for group in groups:
+      for user in missing_users:
+        if user in group.users.split(','):
+          print('error: group "%s" wants missing user "%s"' %
+                (group.group, user), file=sys.stderr)
+
+  return not bool(missing_users)
+
+
 def GetParser():
   """Creates the argparse parser."""
   parser = argparse.ArgumentParser(description=__doc__)
@@ -123,10 +147,12 @@ def main(argv):
   opts = parser.parse_args(argv)
 
   accounts = opts.account
+  consistency_check = False
   if not accounts:
     accounts_dir = os.path.dirname(os.path.realpath(__file__))
     accounts = (glob.glob(os.path.join(accounts_dir, 'group', '*')) +
                 glob.glob(os.path.join(accounts_dir, 'user', '*')))
+    consistency_check = True
 
   groups = []
   users = []
@@ -139,7 +165,7 @@ def main(argv):
       else:
         users.append(ParseUser(name, content))
     except ValueError as e:
-      print('error: %s: %s' % (f, e))
+      print('error: %s: %s' % (f, e), file=sys.stderr)
       return os.EX_DATAERR
 
   if groups:
@@ -166,6 +192,9 @@ def main(argv):
         ('defunct', ''),
     )
     DisplayAccounts(users, order)
+
+  if consistency_check and not CheckConsistency(groups, users):
+    return os.EX_DATAERR
 
 
 if __name__ == '__main__':
