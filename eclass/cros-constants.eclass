@@ -30,7 +30,11 @@ AUTOTEST_BASE="/usr/local/build/autotest"
 # @ECLASS-VARIABLE: CHROOT_SOURCE_ROOT
 # @DESCRIPTION:
 # Path to location of source code in the chroot.
-CHROOT_SOURCE_ROOT='/mnt/host/source'
+# Ebuilds should not override this.  It is controllable so the overall build
+# system can redirect to a different location.  For example, using portage
+# prefix allows building without a chroot in which case this path as-is would
+# never work.
+: ${CHROOT_SOURCE_ROOT:='/mnt/host/source'}
 
 # @ECLASS-VARIABLE: CHROMITE_DIR
 # @DESCRIPTION:
