@@ -1,4 +1,4 @@
 group:tss
 gid:207
 # Only certain users are allowed to talk to the TPM via tcsd.
-users:root,chaps,attestation,trunks
+users:root,chaps,attestation,tpm_manager,trunks
