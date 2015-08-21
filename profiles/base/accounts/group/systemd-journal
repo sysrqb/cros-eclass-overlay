@@ -1,0 +1,4 @@
+group:systemd-journal
+gid:270
+users:
+password:!
