@@ -1,0 +1,7 @@
+user:adb
+uid:269
+gid:269
+password:x
+gecos:Android Debug Bridge User
+home:/home/adb
+shell:/bin/sh
