@@ -1,0 +1,6 @@
+user:systemd-timesync
+uid:271
+gid:271
+gecos:systemd-timesyncd daemon
+home:/dev/null
+shell:/bin/false
