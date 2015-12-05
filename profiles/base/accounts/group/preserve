@@ -1,0 +1,4 @@
+group:preserve
+gid:253
+# Only certain users are allowed to write to /mnt/stateful/unencrypted/preserve.
+users:root,attestation,tpm_manager
