@@ -115,7 +115,28 @@ def CheckConsistency(groups, users):
 
   This does not check for syntax/etc... errors on a per-account basis as the
   main _ParseAccount function above took care of that.
+
+  Args:
+    groups: A list of Group objects.
+    users: A list of User objects.
+
+  Returns:
+    True if everything is consistent.
   """
+  ret = True
+
+  gid_counts = collections.Counter(x.gid for x in groups)
+  for gid in [k for k, v in gid_counts.items() if v > 1]:
+    ret = False
+    dupes = ', '.join(x.group for x in groups if x.gid == gid)
+    print('error: duplicate gid found: %s: %s' % (gid, dupes), file=sys.stderr)
+
+  uid_counts = collections.Counter(x.uid for x in users)
+  for uid in [k for k, v in uid_counts.items() if v > 1]:
+    ret = False
+    dupes = ', '.join(x.user for x in users if x.uid == uid)
+    print('error: duplicate uid found: %s: %s' % (uid, dupes), file=sys.stderr)
+
   found_users = set(x.user for x in users)
   want_users = set()
   for group in groups:
@@ -124,6 +145,7 @@ def CheckConsistency(groups, users):
 
   missing_users = want_users - found_users
   if missing_users:
+    ret = False
     print('error: group lists unknown users', file=sys.stderr)
     for group in groups:
       for user in missing_users:
@@ -131,7 +153,7 @@ def CheckConsistency(groups, users):
           print('error: group "%s" wants missing user "%s"' %
                 (group.group, user), file=sys.stderr)
 
-  return not bool(missing_users)
+  return ret
 
 
 def GetParser():
