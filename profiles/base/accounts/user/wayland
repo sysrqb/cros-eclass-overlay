@@ -1,0 +1,6 @@
+user:wayland
+uid:601
+gid:601
+gecos:Wayland display access
+home:/dev/null
+shell:/bin/false

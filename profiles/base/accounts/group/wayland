@@ -1,0 +1,4 @@
+# Controls access to the wayland server in Chrome
+group:wayland
+gid:601
+users:chronos

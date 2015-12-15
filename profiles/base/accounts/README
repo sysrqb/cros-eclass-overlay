@@ -52,6 +52,9 @@ and group with IDs in this range
 
 Groups that have no associated user should be given GIDs in the 400 range.
 
+Groups and users that are shared with programs running in different user
+namespaces should be in the 600-699 range.
+
 The 'chronos' user, which all user-facing processes in CrOS run as, is
 UID/GID 1000.  There is also a special user/group that has access to
 many resources owned by chronos, called 'chronos-access', which has
