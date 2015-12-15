@@ -1,6 +1,6 @@
 user:cras
-uid:220
-gid:220
+uid:600
+gid:600
 gecos:CrOS audio video daemon
 home:/dev/null
 shell:/bin/false
