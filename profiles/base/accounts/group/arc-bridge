@@ -1,0 +1,4 @@
+# Controls access to the ArcBridgeService in Chrome
+group:arc-bridge
+gid:602
+users:chronos

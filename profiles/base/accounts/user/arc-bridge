@@ -1,0 +1,6 @@
+user:arc-bridge
+uid:602
+gid:602
+gecos:ARC bridge access
+home:/dev/null
+shell:/bin/false
