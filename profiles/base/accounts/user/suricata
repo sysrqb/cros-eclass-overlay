@@ -1,0 +1,6 @@
+user:suricata
+uid:273
+gid:273
+gecos:suricata daemon
+home:/dev/null
+shell:/bin/false
