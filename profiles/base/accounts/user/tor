@@ -1,7 +1,6 @@
 user:tor
 uid:214
 gid:214
-gecos:tor, perhaps unused
+gecos:tor, anonymizing overlay network
 home:/dev/null
 shell:/bin/false
-defunct:true
