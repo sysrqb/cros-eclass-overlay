@@ -1,0 +1,6 @@
+user:arc-camera
+uid:274
+gid:274
+gecos:CrOS ARC camera service daemon
+home:/dev/null
+shell:/bin/false

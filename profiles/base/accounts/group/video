@@ -1,3 +1,5 @@
 group:video
 gid:27
-users:root,chronos,xorg
+# Modifying users here might be overwritten by freon overlay.
+# You probably want to modify both here and freon.
+users:root,chronos,arc-camera,xorg
