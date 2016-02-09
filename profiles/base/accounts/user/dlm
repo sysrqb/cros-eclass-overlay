@@ -1,0 +1,6 @@
+user:dlm
+uid:262
+gid:262
+gecos:DisplayLinkManager daemon user
+home:/dev/null
+shell:/bin/false
