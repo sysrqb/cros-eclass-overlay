@@ -1,0 +1,6 @@
+user:systemd-resolve
+uid:275
+gid:275
+gecos:systemd-resolved daemon
+home:/dev/null
+shell:/bin/false

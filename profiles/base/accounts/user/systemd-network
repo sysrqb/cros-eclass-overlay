@@ -1,0 +1,6 @@
+user:systemd-network
+uid:274
+gid:274
+gecos:systemd-networkd daemon
+home:/dev/null
+shell:/bin/false
